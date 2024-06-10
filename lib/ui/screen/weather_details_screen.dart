@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/ui/widgets/background_widgets.dart';
+import 'package:weather_app/ui/widgets/hourly_forecast_listview_widgets.dart';
+import 'package:weather_app/ui/widgets/weather_information_widgets.dart';
 
 class WeatherDetailsScreen extends StatefulWidget {
   const WeatherDetailsScreen({super.key});
@@ -25,71 +27,18 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
                     decoration: const BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.only(
-                          // bottomLeft: Radius.circular(34),
-                          // bottomRight: Radius.circular(34),
-                        )),
+                            // bottomLeft: Radius.circular(34),
+                            // bottomRight: Radius.circular(34),
+                            )),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-                        child: Text(
-                          DateTime.now().toString(),
-                          style: GoogleFonts.lato(
-                            fontSize: 20,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '22°C',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 44,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  'Real feel 18°C',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 18,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                const Icon(Icons.location_on, color: Colors.black54),
-                                Text(
-                                  'Irkutsk',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 18,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  )
+                  _buildTopMainWeatherInformation(),
                 ],
               ),
+              const SizedBox(
+                height: 8,
+              ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.16,
                   decoration: BoxDecoration(
@@ -107,17 +56,8 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
                     borderRadius: BorderRadius.circular(18),
                     color: Colors.black38,
                   ),
-                  child: const Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('1',style: TextStyle(fontSize: 22),),
-                          Text('2'),
-                          Text('2'),
-                        ],
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    child: _buildBottomDetailsWeatherInformation(),
                   ),
                 ),
               ),
@@ -127,41 +67,95 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
       ),
     );
   }
-}
 
-class HourlyForecastListview extends StatelessWidget {
-  const HourlyForecastListview({
-    super.key,
-  });
+  Widget _buildBottomDetailsWeatherInformation() {
+    return const Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            WeatherInformationsWidgets(
+                icon: Icons.sunny, title: 'UV', details: '0 weak'),
+            WeatherInformationsWidgets(
+                icon: Icons.thermostat_auto_rounded,
+                title: 'Feels like',
+                details: '34'),
+            WeatherInformationsWidgets(
+                icon: Icons.water_drop, title: 'Humidity', details: '84%'),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            WeatherInformationsWidgets(
+                icon: Icons.air, title: 'SE Wind', details: '0 weak'),
+            WeatherInformationsWidgets(
+                icon: Icons.air_rounded, title: 'Air Pressure', details: '34'),
+            WeatherInformationsWidgets(
+                icon: Icons.visibility, title: 'Visibility', details: '84%'),
+          ],
+        ),
+      ],
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: 15,
-      itemBuilder: (context, index) {
-        return Container(
-          width: MediaQuery.of(context).size.width * 0.25,
-          margin: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 25.0),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildTopMainWeatherInformation() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+          child: Text(
+            DateTime.now().toString(),
+            style: GoogleFonts.lato(
+              fontSize: 20,
+              color: Colors.black54,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('29 June',style: TextStyle(color: Colors.white),),
-              SizedBox(height: 6),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.radar,color: Colors.white,),
-                  SizedBox(width: 6),
-                  Text('19°C',style: TextStyle(color: Colors.white),),
+                  Text(
+                    '22°C',
+                    style: GoogleFonts.lato(
+                      fontSize: 44,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Real feel 18°C',
+                    style: GoogleFonts.lato(
+                      fontSize: 18,
+                      color: Colors.black54,
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 6),
-              Text('Sunflower',style: TextStyle(color: Colors.white),),
+              Column(
+                children: [
+                  const Icon(Icons.location_on, color: Colors.black54),
+                  Text(
+                    'Irkutsk',
+                    style: GoogleFonts.lato(
+                      fontSize: 18,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-        );
-      },
+        )
+      ],
     );
   }
 }
