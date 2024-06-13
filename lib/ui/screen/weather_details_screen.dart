@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weather_app/ui/widgets/background_widgets.dart';
 import 'package:weather_app/ui/widgets/hourly_forecast_listview_widgets.dart';
 import 'package:weather_app/ui/widgets/weather_information_widgets.dart';
@@ -21,15 +22,10 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
             children: [
               Stack(
                 children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.55,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.53,
                     width: MediaQuery.of(context).size.width * 1.0,
-                    decoration: const BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.only(
-                            // bottomLeft: Radius.circular(34),
-                            // bottomRight: Radius.circular(34),
-                            )),
+                    child: Lottie.asset('assets/animations/night.json',fit: BoxFit.cover),
                   ),
                   _buildTopMainWeatherInformation(),
                 ],
@@ -43,7 +39,7 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
                   height: MediaQuery.of(context).size.height * 0.16,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
-                    color: Colors.black38,
+                    color: Colors.black.withOpacity(0.5),
                   ),
                   child: const HourlyForecastListview(),
                 ),
@@ -54,7 +50,7 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
                   height: MediaQuery.of(context).size.height * 0.25,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
-                    color: Colors.black38,
+                    color: Colors.black.withOpacity(0.5),
                   ),
                   child: SingleChildScrollView(
                     child: _buildBottomDetailsWeatherInformation(),
@@ -103,15 +99,19 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-          child: Text(
-            DateTime.now().toString(),
-            style: GoogleFonts.lato(
-              fontSize: 20,
-              color: Colors.black54,
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+              child: Text(
+                DateTime.now().toString(),
+                style: GoogleFonts.lato(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
         const SizedBox(
           height: 5,
@@ -127,7 +127,8 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
                   Text(
                     '22°C',
                     style: GoogleFonts.lato(
-                      fontSize: 44,
+                      fontSize: 50,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -135,23 +136,23 @@ class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
                     'Real feel 18°C',
                     style: GoogleFonts.lato(
                       fontSize: 18,
-                      color: Colors.black54,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  const Icon(Icons.location_on, color: Colors.black54),
-                  Text(
-                    'Irkutsk',
-                    style: GoogleFonts.lato(
-                      fontSize: 18,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ],
-              ),
+              // Column(
+              //   children: [
+              //     const Icon(Icons.location_on, color: Colors.green),
+              //     Text(
+              //       'Irkutsk',
+              //       style: GoogleFonts.lato(
+              //         fontSize: 18,
+              //         color: Colors.red,
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         )
